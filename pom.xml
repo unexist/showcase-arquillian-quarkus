@@ -3,7 +3,7 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>showcase-arquillian-quarkus</artifactId>
+    <artifactId>showcase-arquillian-testcontainers-quarkus</artifactId>
     <version>0.1</version>
     <packaging>pom</packaging>
 
@@ -14,7 +14,7 @@
     </parent>
 
     <modules>
-        <module>todo-service-create</module>
-        <module>todo-service-verify</module>
+        <module>todo-service-arquillian</module>
+        <module>todo-service-testcontainers</module>
     </modules>
 </project>
