@@ -16,11 +16,8 @@ import com.tersesystems.echopraxia.LoggerFactory;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import java.time.Duration;
 import java.util.Optional;
 import java.util.UUID;
-
-import static org.awaitility.Awaitility.await;
 
 @ApplicationScoped
 public class TodoService {
@@ -42,8 +39,6 @@ public class TodoService {
         Todo todo = new Todo(base);
 
         todo.setId(UUID.randomUUID().toString());
-
-        await().between(Duration.ofSeconds(1), Duration.ofSeconds(10));
 
         LOGGER.info("Added id to todo: {}",
                 fb -> fb.onlyTodo("todo", todo));
