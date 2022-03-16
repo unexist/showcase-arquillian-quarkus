@@ -1,7 +1,8 @@
-= Showcase for Arquillian on quarkus
+= Showcase for Arquillian and Testcontainers on Quarkus
 
-This project holds a showcase for Arquillian on Quarkus
+This project holds a showcase for Arquillian and Testcontainers on Quarkus
 
 == Links
 
 - https://arquillian.org
+- https://testcontainers.org
