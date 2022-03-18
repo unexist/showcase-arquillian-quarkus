@@ -11,18 +11,13 @@
 
 package dev.unexist.showcase.todo.domain.todo;
 
-import com.tersesystems.echopraxia.Logger;
-import com.tersesystems.echopraxia.LoggerFactory;
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @ApplicationScoped
 public class TodoService {
-    private static final Logger<Todo.FieldBuilder> LOGGER = LoggerFactory.getLogger(TodoService.class)
-            .withFieldBuilder(Todo.FieldBuilder.class);
 
     @Inject
     TodoRepository todoRepository;
@@ -35,39 +30,54 @@ public class TodoService {
      * @return Either id of the entry on success; otherwise {@code -1}
      **/
 
-    public Optional<Todo> create(TodoBase base) {
+    public int create(TodoBase base) {
         Todo todo = new Todo(base);
 
-        todo.setId(UUID.randomUUID().toString());
-
-        LOGGER.info("Added id to todo: {}",
-                fb -> fb.onlyTodo("todo", todo));
-
-        return Optional.of(todo);
+        return this.todoRepository.add(todo) ? todo.getId() : -1;
     }
 
     /**
      * Update {@link Todo} at with given id
      *
-     * @param  todo  A {@link Todo} to update
+     * @param  id    Id to update
+     * @param  base  Values for the entry
      *
      * @return Either {@code true} on success; otherwise {@code false}
      **/
 
-    public boolean update(Todo todo) {
+    public boolean update(int id, TodoBase base) {
+        Optional<Todo> todo = this.findById(id);
         boolean ret = false;
 
-        if (this.todoRepository.update(todo)) {
-            LOGGER.info("Updated todo: {}",
-                    fb -> fb.onlyTodo("todo", todo));
+        if (todo.isPresent()) {
+            todo.get().update(base);
 
-            ret = true;
-        } else {
-            LOGGER.error("Cannot update todo: {}",
-                    fb -> fb.onlyTodo("todo", todo));
+            ret = this.todoRepository.update(todo.get());
         }
 
         return ret;
+    }
+
+    /**
+     * Delete {@link Todo} with given id
+     *
+     * @param  id  Id to delete
+     *
+     * @return Either {@code true} on success; otherwise {@code false}
+     **/
+
+    public boolean delete(int id) {
+        return this.todoRepository.deleteById(id);
+    }
+
+    /**
+     * Get all {@link Todo} entries
+     *
+     * @return List of all {@link Todo}; might be empty
+     **/
+
+    public List<Todo> getAll() {
+        return this.todoRepository.getAll();
     }
 
     /**
@@ -78,7 +88,7 @@ public class TodoService {
      * @return A {@link Optional} of the entry
      **/
 
-    public Optional<Todo> findById(String id) {
+    public Optional<Todo> findById(int id) {
         return this.todoRepository.findById(id);
     }
 }

@@ -11,18 +11,26 @@
 
 package dev.unexist.showcase.todo.domain.todo;
 
-import com.tersesystems.echopraxia.Field;
-
-import java.util.List;
-
 public class Todo extends TodoBase {
-    private String id;
+    private int id;
 
     /**
      * Constructor
      **/
 
     public Todo() {
+    }
+
+    /**
+     * Constructor
+     *
+     * @param  title        Title of the entry
+     * @param  description  Description of the entry
+     **/
+
+    public Todo(final String title, final String description) {
+        this.setTitle(title);
+        this.setDescription(description);
     }
 
     /**
@@ -45,7 +53,6 @@ public class Todo extends TodoBase {
         this.setTitle(base.getTitle());
         this.setDescription(base.getDescription());
         this.setDone(base.getDone());
-        this.setVerified(base.getVerified());
 
         if (null != base.getDueDate()) {
             this.setDueDate(base.getDueDate());
@@ -58,7 +65,7 @@ public class Todo extends TodoBase {
      * @return Id of the entry
      **/
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -68,41 +75,7 @@ public class Todo extends TodoBase {
      * @param  id  Id of the entry
      **/
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
-    }
-
-    public static class FieldBuilder implements Field.Builder {
-
-        /**
-         * Field builder for {@link Todo}
-         *
-         * @param  name  Name of the log key
-         * @param  todo  A {@link Todo} entry to log
-         *
-         * @return Logging {@link Field}
-         **/
-
-        public Field todo(String name, Todo todo) {
-            return object(
-                    name,
-                    string("id", todo.getId()),
-                    string("title", todo.getTitle()),
-                    string("description", todo.getDescription())
-            );
-        }
-
-        /**
-         * Convenience field builder for {@link Todo}
-         *
-         * @param  name  Name of the log key
-         * @param  todo  A {@link Todo} entry to log
-         *
-         * @return Logging list with only one {@link Field}
-         **/
-
-        public List<Field> onlyTodo(String name, Todo todo) {
-            return List.of(todo(name, todo));
-        }
     }
 }

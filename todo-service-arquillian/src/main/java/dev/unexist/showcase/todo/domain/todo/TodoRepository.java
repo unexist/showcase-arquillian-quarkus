@@ -44,7 +44,7 @@ public interface TodoRepository {
      * @return Either {@code true} on success; otherwise {@code false}
      **/
 
-    boolean deleteById(String id);
+    boolean deleteById(int id);
 
     /**
      * Get all {@link Todo} entries
@@ -62,5 +62,5 @@ public interface TodoRepository {
      * @return A {@link Optional} with the result of the lookup
      **/
 
-    Optional<Todo> findById(String id);
+    Optional<Todo> findById(int id);
 }

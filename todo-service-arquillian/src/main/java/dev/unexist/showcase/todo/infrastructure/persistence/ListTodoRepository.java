@@ -22,13 +22,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static java.util.stream.Collectors.toList;
-
 @ApplicationScoped
 public class ListTodoRepository implements TodoRepository {
     private static final Logger LOGGER = LoggerFactory.getLogger(ListTodoRepository.class);
 
-    private List<Todo> list;
+    private final List<Todo> list;
 
     /**
      * Constructor
@@ -40,25 +38,39 @@ public class ListTodoRepository implements TodoRepository {
 
     @Override
     public boolean add(final Todo todo) {
+        todo.setId(this.list.size() + 1);
+
         return this.list.add(todo);
     }
 
     @Override
     public boolean update(final Todo todo) {
-        this.list = this.list.stream()
-                .map(t -> t.getId().equals(todo.getId()) ? todo : t)
-                .collect(toList());
+        boolean ret = false;
 
-        if (this.list.stream().noneMatch(t -> t.getId().equals(todo.getId()))) {
-            this.list.add(todo);
+        try {
+            this.list.set(todo.getId(), todo);
+
+            ret = true;
+        } catch (IndexOutOfBoundsException e) {
+            LOGGER.warn("update: id={} not found", todo.getId());
         }
 
-        return this.list.stream().anyMatch(t -> t.getId().equals(todo.getId()));
+        return ret;
     }
 
     @Override
-    public boolean deleteById(String id) {
-        return this.list.removeIf(t -> t.getId().equals(id));
+    public boolean deleteById(int id) {
+        boolean ret = false;
+
+        try {
+            this.list.remove(id);
+
+            ret = true;
+        } catch (IndexOutOfBoundsException e) {
+            LOGGER.warn("deleteById: id={} not found", id);
+        }
+
+        return ret;
     }
 
     @Override
@@ -67,9 +79,9 @@ public class ListTodoRepository implements TodoRepository {
     }
 
     @Override
-    public Optional<Todo> findById(String id) {
+    public Optional<Todo> findById(int id) {
         return this.list.stream()
-                .filter(t -> t.getId().equals(id))
+                .filter(t -> t.getId() == id)
                 .findFirst();
     }
 }
