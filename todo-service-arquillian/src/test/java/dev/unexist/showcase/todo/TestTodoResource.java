@@ -11,6 +11,8 @@
 package dev.unexist.showcase.todo;
 
 import io.restassured.RestAssured;
+import org.arquillian.ape.rest.RestPopulator;
+import org.arquillian.ape.rest.postman.Postman;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit5.ArquillianExtension;
@@ -21,7 +23,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import java.net.URL;
+import java.net.URI;
 
 import static io.restassured.RestAssured.given;
 
@@ -29,7 +31,11 @@ import static io.restassured.RestAssured.given;
 public class TestTodoResource {
 
     @ArquillianResource
-    URL url;
+    URI uri;
+
+    @Postman
+    @ArquillianResource
+    RestPopulator populator;
 
     @Deployment
     public static JavaArchive createDeployment() {
@@ -41,15 +47,23 @@ public class TestTodoResource {
 
     @BeforeEach
     public void setUp() {
-        RestAssured.baseURI = this.url.toString();
+        RestAssured.baseURI = this.uri.toString();
     }
 
     @Test
     @RunAsClient
-    public void testGetId() {
+    public void test_get_id_should_succeed() {
         given()
                 .when().get("/todo/1234")
                 .then()
                 .statusCode(404);
+    }
+
+    @Test
+    @RunAsClient
+    public void test_get_id_via_postman_should_succeed() {
+        this.populator.forUri(this.uri)
+                .usingDataSets("todo.json")
+                .execute();
     }
 }

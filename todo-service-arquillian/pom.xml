@@ -15,6 +15,7 @@
 
     <properties>
         <arquillian-junit5-container.version>1.7.0.Alpha10</arquillian-junit5-container.version>
+        <arquillian-ape-rest-postman.version>2.0.0-alpha.7</arquillian-ape-rest-postman.version>
     </properties>
 
     <dependencies>
@@ -34,6 +35,11 @@
             <groupId>org.jboss.arquillian.junit5</groupId>
             <artifactId>arquillian-junit5-container</artifactId>
             <version>${arquillian-junit5-container.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.arquillian.ape</groupId>
+            <artifactId>arquillian-ape-rest-postman</artifactId>
+            <version>${arquillian-ape-rest-postman.version}</version>
         </dependency>
     </dependencies>
 </project>
