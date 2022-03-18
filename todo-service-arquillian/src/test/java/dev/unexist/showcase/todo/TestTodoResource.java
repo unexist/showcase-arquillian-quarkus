@@ -10,29 +10,43 @@
 
 package dev.unexist.showcase.todo;
 
+import io.restassured.RestAssured;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
+import java.net.URL;
 
 import static io.restassured.RestAssured.given;
 
 @ExtendWith(ArquillianExtension.class)
 public class TestTodoResource {
 
+    @ArquillianResource
+    URL url;
+
     @Deployment
     public static JavaArchive createDeployment() {
         JavaArchive archive =  ShrinkWrap.create(JavaArchive.class, "test.jar")
                 .addPackage("dev.unexist.showcase.*");
+
+        return archive;
+    }
+
+    @BeforeEach
+    public void setUp() {
+        RestAssured.baseURI = this.url.toString();
     }
 
     @Test
     @RunAsClient
-    public void testGetId(@ArquillianResource String url) {
+    public void testGetId() {
         given()
                 .when().get("/todo/1234")
                 .then()
