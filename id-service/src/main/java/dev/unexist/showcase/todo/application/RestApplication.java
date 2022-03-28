@@ -9,7 +9,7 @@
  * See the file LICENSE for details.
  **/
 
-package application;
+package dev.unexist.showcase.todo.application;
 
 import javax.ws.rs.core.Application;
 

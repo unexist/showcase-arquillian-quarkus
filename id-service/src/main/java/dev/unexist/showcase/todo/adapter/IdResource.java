@@ -9,7 +9,7 @@
  * See the file LICENSE for details.
  **/
 
-package adapter;
+package dev.unexist.showcase.todo.adapter;
 
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
@@ -35,9 +35,8 @@ public class IdResource {
     @Operation(summary = "Get all todos")
     @Tag(name = "Todo")
     @APIResponses({
-            @APIResponse(responseCode = "200", description = "List of todo", content =
+            @APIResponse(responseCode = "200", description = "New id", content =
             @Content(schema = @Schema(type = SchemaType.STRING))),
-            @APIResponse(responseCode = "204", description = "Nothing found"),
             @APIResponse(responseCode = "500", description = "Server error")
     })
     public Response getId() {
