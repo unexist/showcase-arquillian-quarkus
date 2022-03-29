@@ -13,8 +13,6 @@ package dev.unexist.showcase.todo.infrastructure.persistence;
 
 import dev.unexist.showcase.todo.domain.todo.Todo;
 import dev.unexist.showcase.todo.domain.todo.TodoRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.util.ArrayList;
@@ -22,11 +20,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.stream.Collectors.toList;
+
 @ApplicationScoped
 public class ListTodoRepository implements TodoRepository {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ListTodoRepository.class);
-
-    private final List<Todo> list;
+    private List<Todo> list;
 
     /**
      * Constructor
@@ -38,39 +36,25 @@ public class ListTodoRepository implements TodoRepository {
 
     @Override
     public boolean add(final Todo todo) {
-        todo.setId(this.list.size() + 1);
-
         return this.list.add(todo);
     }
 
     @Override
     public boolean update(final Todo todo) {
-        boolean ret = false;
+        this.list = this.list.stream()
+                .map(t -> t.getId().equals(todo.getId()) ? todo : t)
+                .collect(toList());
 
-        try {
-            this.list.set(todo.getId(), todo);
-
-            ret = true;
-        } catch (IndexOutOfBoundsException e) {
-            LOGGER.warn("update: id={} not found", todo.getId());
+        if (this.list.stream().noneMatch(t -> t.getId().equals(todo.getId()))) {
+            this.list.add(todo);
         }
 
-        return ret;
+        return this.list.stream().anyMatch(t -> t.getId().equals(todo.getId()));
     }
 
     @Override
-    public boolean deleteById(int id) {
-        boolean ret = false;
-
-        try {
-            this.list.remove(id);
-
-            ret = true;
-        } catch (IndexOutOfBoundsException e) {
-            LOGGER.warn("deleteById: id={} not found", id);
-        }
-
-        return ret;
+    public boolean deleteById(String id) {
+        return this.list.removeIf(t -> t.getId().equals(id));
     }
 
     @Override
@@ -79,9 +63,9 @@ public class ListTodoRepository implements TodoRepository {
     }
 
     @Override
-    public Optional<Todo> findById(int id) {
+    public Optional<Todo> findById(String id) {
         return this.list.stream()
-                .filter(t -> t.getId() == id)
+                .filter(t -> t.getId().equals(id))
                 .findFirst();
     }
 }

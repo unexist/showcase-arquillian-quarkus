@@ -26,14 +26,17 @@ public class TodoService {
      * Create new {@link Todo} entry and store it in repository
      *
      * @param  base  A {@link TodoBase} entry
+     * @param  id    Id for the new entry
      *
-     * @return Either id of the entry on success; otherwise {@code -1}
+     * @return Either {@code true} on success; otherwise {@code false}
      **/
 
-    public int create(TodoBase base) {
+    public boolean create(TodoBase base, String id) {
         Todo todo = new Todo(base);
 
-        return this.todoRepository.add(todo) ? todo.getId() : -1;
+        todo.setId(id);
+
+        return this.todoRepository.add(todo);
     }
 
     /**
@@ -45,7 +48,7 @@ public class TodoService {
      * @return Either {@code true} on success; otherwise {@code false}
      **/
 
-    public boolean update(int id, TodoBase base) {
+    public boolean update(String id, TodoBase base) {
         Optional<Todo> todo = this.findById(id);
         boolean ret = false;
 
@@ -66,7 +69,7 @@ public class TodoService {
      * @return Either {@code true} on success; otherwise {@code false}
      **/
 
-    public boolean delete(int id) {
+    public boolean delete(String id) {
         return this.todoRepository.deleteById(id);
     }
 
@@ -88,7 +91,7 @@ public class TodoService {
      * @return A {@link Optional} of the entry
      **/
 
-    public Optional<Todo> findById(int id) {
+    public Optional<Todo> findById(String id) {
         return this.todoRepository.findById(id);
     }
 }

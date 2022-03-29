@@ -21,6 +21,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -46,6 +47,10 @@ public class TodoResource {
     @Inject
     TodoService todoService;
 
+    @Inject
+    @RestClient
+    IdService idService;
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -59,11 +64,11 @@ public class TodoResource {
     public Response create(TodoBase base, @Context UriInfo uriInfo) {
         Response.ResponseBuilder response;
 
-        int newId = this.todoService.create(base);
+        String id = this.idService.getId();
 
-        if (-1 != newId) {
+        if (this.todoService.create(base, id)) {
             URI uri = uriInfo.getAbsolutePathBuilder()
-                    .path(Integer.toString(newId))
+                    .path(id)
                     .build();
 
             response = Response.created(uri);
@@ -109,7 +114,7 @@ public class TodoResource {
             @APIResponse(responseCode = "404", description = "Todo not found"),
             @APIResponse(responseCode = "500", description = "Server error")
     })
-    public Response findById(@PathParam("id") int id) {
+    public Response findById(@PathParam("id") String id) {
         Optional<Todo> result = this.todoService.findById(id);
 
         Response.ResponseBuilder response;
@@ -134,7 +139,7 @@ public class TodoResource {
             @APIResponse(responseCode = "404", description = "Todo not found"),
             @APIResponse(responseCode = "500", description = "Server error")
     })
-    public Response update(@PathParam("id") int id, TodoBase base) {
+    public Response update(@PathParam("id") String id, TodoBase base) {
         Response.ResponseBuilder response;
 
         if (this.todoService.update(id, base)) {
@@ -152,7 +157,7 @@ public class TodoResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Operation(summary = "Delete todo by id")
     @Tag(name = "Todo")
-    public Response delete(@PathParam("id") int id, TodoBase base) {
+    public Response delete(@PathParam("id") String id, TodoBase base) {
         Response.ResponseBuilder response;
 
         if (this.todoService.delete(id)) {
