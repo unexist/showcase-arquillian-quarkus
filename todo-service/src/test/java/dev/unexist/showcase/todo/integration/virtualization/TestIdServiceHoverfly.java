@@ -21,6 +21,9 @@ import org.junit.jupiter.api.Test;
 
 import javax.inject.Inject;
 
+import static io.restassured.RestAssured.given;
+import static org.assertj.core.api.Assertions.assertThat;
+
 @QuarkusTest
 @QuarkusTestResource(value = HoverflyResource.class, restrictToAnnotatedClass = true)
 public class TestIdServiceHoverfly {
@@ -34,7 +37,7 @@ public class TestIdServiceHoverfly {
 
     @Test
     void shouldGetIdWithRestAssured() {
-        RestAssured.given()
+        given()
                 .spec(new RequestSpecBuilder().setBaseUri("http://" + this.serviceUrl).build())
         .when()
                 .get("/id")
@@ -44,6 +47,6 @@ public class TestIdServiceHoverfly {
 
     @Test
     void shouldGetIdWithRestClient() {
-        Assertions.assertThat(this.idService.getId()).isNotEmpty();
+        assertThat(this.idService.getId()).isNotEmpty();
     }
 }

@@ -14,7 +14,9 @@ package dev.unexist.showcase.todo.integration.containerization;
 import dev.unexist.showcase.todo.domain.todo.TodoBase;
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
+import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @QuarkusTest

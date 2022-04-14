@@ -17,6 +17,9 @@ import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
 
+import static io.restassured.RestAssured.given;
+import static org.assertj.core.api.Assertions.assertThat;
+
 @QuarkusTest
 @QuarkusTestResource(value = HoverflyResource.class, restrictToAnnotatedClass = true)
 public class TestTodoServiceHoverfly {
@@ -24,7 +27,7 @@ public class TestTodoServiceHoverfly {
     @Test
     void shouldCreateTodoWithRestAssured() {
         String location =
-            RestAssured.given()
+            given()
                 .contentType(ContentType.JSON)
                 .body(new TodoBase("test", "test"))
             .when()
@@ -33,6 +36,6 @@ public class TestTodoServiceHoverfly {
                 .statusCode(201)
                     .extract().header("location");
 
-        Assertions.assertThat(location).isNotBlank();
+        assertThat(location).isNotBlank();
     }
 }
