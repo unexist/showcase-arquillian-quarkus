@@ -1,7 +1,9 @@
-= Showcase for Arquillian on Quarkus
+= Showcase for integration testing on Quarkus
 
-This project holds a showcase for Arquillian on Quarkus
+This project holds a showcase for integration testing on Quarkus
 
 == Links
 
 - https://arquillian.org
+- https://testcontainers.org
+- https://hoverfly.io
