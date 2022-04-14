@@ -1,5 +1,5 @@
 /**
- * @package Showcase-Arquillian-Quarkus
+ * @package Showcase-Integration-Testing-Quarkus
  *
  * @file Todo deserializer
  * @copyright 2021 Christoph Kappel <christoph@unexist.dev>

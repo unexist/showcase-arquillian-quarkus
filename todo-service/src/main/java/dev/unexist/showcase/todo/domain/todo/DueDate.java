@@ -1,5 +1,5 @@
 /**
- * @package Showcase-Arquillian-Quarkus
+ * @package Showcase-Integration-Testing-Quarkus
  *
  * @file DueDate class
  * @copyright 2021-2022 Christoph Kappel <christoph@unexist.dev>
