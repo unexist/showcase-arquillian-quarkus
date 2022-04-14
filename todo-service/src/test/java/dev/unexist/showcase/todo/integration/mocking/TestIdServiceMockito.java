@@ -20,6 +20,8 @@ import org.mockito.Mockito;
 
 import java.util.UUID;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @QuarkusTest
 public class TestIdServiceMockito {
 
@@ -31,6 +33,6 @@ public class TestIdServiceMockito {
     void shouldGetIdWithRestClient() {
         Mockito.when(idService.getId()).thenReturn(UUID.randomUUID().toString());
 
-        Assertions.assertThat(this.idService.getId()).isNotEmpty();
+        assertThat(this.idService.getId()).isNotEmpty();
     }
 }
