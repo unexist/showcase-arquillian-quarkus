@@ -14,10 +14,11 @@ package dev.unexist.showcase.todo.integration.containerization;
 import dev.unexist.showcase.todo.domain.todo.TodoBase;
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
-import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import static io.restassured.RestAssured.given;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @QuarkusTest
 @QuarkusTestResource(value = TestcontainersResource.class, restrictToAnnotatedClass = true)
@@ -26,7 +27,7 @@ public class TestTodoServiceTestcontainers {
     @Test
     void shouldCreateTodoWithRestAssured() {
         String location =
-            RestAssured.given()
+            given()
                 .contentType(ContentType.JSON)
                 .body(new TodoBase("test", "test"))
             .when()
@@ -35,6 +36,6 @@ public class TestTodoServiceTestcontainers {
                 .statusCode(201)
                     .extract().header("location");
 
-        Assertions.assertThat(location).isNotBlank();
+        assertThat(location).isNotBlank();
     }
 }
