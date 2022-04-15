@@ -33,7 +33,7 @@ public class TestcontainersResource implements QuarkusTestResourceLifecycleManag
                                         .from("eclipse-temurin:11")
                                         .run("mkdir /opt/app")
                                         .copy("../../../../../id-service/target/" + JAR_FILE, APP_PATH)
-                                        .cmd("javan", "-jar", APP_PATH + JAR_FILE)
+                                        .cmd("java", "-jar", APP_PATH + JAR_FILE)
                                         .build()))
                 .withExposedPorts(8085);
 
