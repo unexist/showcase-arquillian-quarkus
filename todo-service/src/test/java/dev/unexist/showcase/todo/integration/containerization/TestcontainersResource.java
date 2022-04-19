@@ -45,9 +45,8 @@ public class TestcontainersResource implements QuarkusTestResourceLifecycleManag
                 .withExposedPorts(8085);
 
         this.container = new FixedHostPortGenericContainer(container.getDockerImageName())
-            .withFixedExposedPort(8085, 8085);
-
-        this.container.waitingFor(Wait.forListeningPort());
+            .withFixedExposedPort(8085, 8085)
+                .waitingFor(Wait.forHttp("/"));
 
         this.container.start();
 
