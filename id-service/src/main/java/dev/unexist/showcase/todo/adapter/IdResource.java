@@ -22,7 +22,6 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.UUID;
@@ -32,14 +31,14 @@ public class IdResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Operation(summary = "Get all todos")
-    @Tag(name = "Todo")
+    @Operation(summary = "Create a new ID")
+    @Tag(name = "Id")
     @APIResponses({
             @APIResponse(responseCode = "200", description = "New id", content =
             @Content(schema = @Schema(type = SchemaType.STRING))),
             @APIResponse(responseCode = "500", description = "Server error")
     })
     public Response getId() {
-        return Response.ok(Entity.json(UUID.randomUUID().toString())).build();
+        return Response.ok(UUID.randomUUID().toString()).build();
     }
 }
