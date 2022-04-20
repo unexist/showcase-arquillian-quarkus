@@ -41,12 +41,13 @@ public class TestcontainersResource implements QuarkusTestResourceLifecycleManag
                                         .run("mkdir " + APP_PATH)
                                         .copy(JAR_FILE, APP_PATH)
                                         .cmd("java", "-jar", Paths.get(APP_PATH, JAR_FILE).toString())
+                                        .expose(8085)
                                         .build()))
                 .withExposedPorts(8085);
 
         this.container = new FixedHostPortGenericContainer(container.getDockerImageName())
             .withFixedExposedPort(8085, 8085)
-                .waitingFor(Wait.forHttp("/"));
+                .waitingFor(Wait.forLogMessage(".*Listening on:.*", 1));
 
         this.container.start();
 
