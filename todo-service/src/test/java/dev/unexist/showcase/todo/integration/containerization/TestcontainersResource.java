@@ -30,7 +30,8 @@ public class TestcontainersResource implements QuarkusTestResourceLifecycleManag
 
     @Override
     public Map<String, String> start() {
-        Path jarPath = Paths.get(Paths.get("").toAbsolutePath().toString(), "/../id-service/target/", JAR_FILE);
+        Path jarPath = Paths.get(Paths.get("").toAbsolutePath().toString(),
+                "/../id-service/target/", JAR_FILE);
 
         GenericContainer<?> container = new GenericContainer(
                 new ImageFromDockerfile()
