@@ -22,6 +22,9 @@
 
         <!-- Arquillian -->
         <arquillian-junit5-container.version>1.7.0.Alpha10</arquillian-junit5-container.version>
+        <arquillian-cube-docker-junit5.version>1.18.2</arquillian-cube-docker-junit5.version>
+        <shrinkwrap-depchain.version>2.0.0-beta-1</shrinkwrap-depchain.version>
+        <shrinkwrap-descriptors-docker.version>1.0.0-alpha-2</shrinkwrap-descriptors-docker.version>
     </properties>
 
     <dependencies>
@@ -71,6 +74,27 @@
             <groupId>org.jboss.arquillian.junit5</groupId>
             <artifactId>arquillian-junit5-container</artifactId>
             <version>${arquillian-junit5-container.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.arquillian.cube</groupId>
+            <artifactId>arquillian-cube-docker-junit5</artifactId>
+            <version>${arquillian-cube-docker-junit5.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Shrinkwrap -->
+        <dependency>
+            <groupId>org.jboss.shrinkwrap.descriptors</groupId>
+            <artifactId>shrinkwrap-descriptors-api-docker</artifactId>
+            <version>${shrinkwrap-descriptors-docker.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.shrinkwrap.descriptors</groupId>
+            <artifactId>shrinkwrap-descriptors-impl-docker</artifactId>
+            <version>${shrinkwrap-descriptors-docker.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
