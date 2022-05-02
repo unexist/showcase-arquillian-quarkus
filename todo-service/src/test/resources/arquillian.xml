@@ -3,4 +3,8 @@
             xmlns="http://jboss.org/schema/arquillian"
             xsi:schemaLocation="http://jboss.org/schema/arquillian
     http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
+
+    <extension qualifier="docker">
+        <property name="serverUri">unix:///Users/christoph.kappel/.local/share/containers/podman/machine/podman-machine-default/podman.sock</property>
+    </extension>
 </arquillian>
