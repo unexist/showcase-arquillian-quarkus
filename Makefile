@@ -27,5 +27,8 @@ testcontainers-env:
 	launchctl setenv TESTCONTAINERS_RYUK_DISABLED true
 	launchctl setenv TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE unix://${HOME}/.local/share/containers/podman/machine/podman-machine-default/podman.sock
 
+docker-env:
+	launchctl setenv DOCKER_HOST unix://${HOME}/.local/share/containers/podman/machine/podman-machine-default/podman.sock
+
 id-service:
 	mvn -f id-service/pom.xml package
