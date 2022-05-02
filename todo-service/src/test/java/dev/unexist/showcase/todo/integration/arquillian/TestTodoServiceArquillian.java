@@ -53,7 +53,7 @@ public class TestTodoServiceArquillian {
 
     @Test
     @RunAsClient
-    public void shouldGetNotfound() {
+    public void shouldGetNewId() {
         given()
         .when().get("/id")
         .then()

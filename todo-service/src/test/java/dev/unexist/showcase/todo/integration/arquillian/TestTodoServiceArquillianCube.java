@@ -27,7 +27,7 @@ public class TestTodoServiceArquillianCube {
 
     @Test
     @RunAsClient
-    public void shouldGetNotfound() {
+    public void shouldGetNewId() {
         given()
         .when().get("/id")
         .then()
