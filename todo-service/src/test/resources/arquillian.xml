@@ -6,5 +6,7 @@
 
     <extension qualifier="docker">
         <property name="serverUri">unix:///Users/christoph.kappel/.local/share/containers/podman/machine/podman-machine-default/podman.sock</property>
+        <property name="dockerHost">unix:///Users/christoph.kappel/.local/share/containers/podman/machine/podman-machine-default/podman.sock</property>
+        <property name="definitionFormat">CUBE</property>
     </extension>
 </arquillian>
