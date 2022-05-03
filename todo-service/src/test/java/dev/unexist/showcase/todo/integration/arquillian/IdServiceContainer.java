@@ -10,6 +10,8 @@
 
 package dev.unexist.showcase.todo.integration.arquillian;
 
+import org.arquillian.cube.HostIp;
+import org.arquillian.cube.HostPort;
 import org.arquillian.cube.containerobject.Cube;
 import org.arquillian.cube.containerobject.CubeDockerFile;
 import org.jboss.shrinkwrap.api.Archive;
@@ -24,9 +26,14 @@ import java.nio.file.Paths;
 
 @Cube(value = "idservice", portBinding = "8085->8085/tcp")
 public class IdServiceContainer {
-    private static final String SERVICE_URL = "localhost:8085";
     private static final String APP_PATH = "/opt/app";
     private static final String JAR_FILE = "id-service-0.1-runner.jar";
+
+    @HostIp
+    String dockerHost;
+
+    @HostPort(8085)
+    private int port;
 
     @CubeDockerFile
     public static Archive<?> createContainer() {
@@ -43,5 +50,13 @@ public class IdServiceContainer {
 
         return ShrinkWrap.create(GenericArchive.class)
                 .add(new StringAsset(dockerDescriptor), "Dockerfile");
+    }
+
+    public int getConnectionPort() {
+        return port;
+    }
+
+    public String getDockerHost() {
+        return this.dockerHost;
     }
 }
