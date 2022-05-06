@@ -25,6 +25,7 @@
         <arquillian-cube-docker-junit5.version>1.18.2</arquillian-cube-docker-junit5.version>
         <shrinkwrap-depchain.version>2.0.0-beta-1</shrinkwrap-depchain.version>
         <shrinkwrap-descriptors-docker.version>1.0.0-alpha-2</shrinkwrap-descriptors-docker.version>
+        <arquillian-cube-docker-restassured.version>1.5.0.0</arquillian-cube-docker-restassured.version>
     </properties>
 
     <dependencies>
@@ -80,6 +81,13 @@
             <groupId>org.arquillian.cube</groupId>
             <artifactId>arquillian-cube-docker-junit5</artifactId>
             <version>${arquillian-cube-docker-junit5.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.arquillian.universe</groupId>
+            <artifactId>arquillian-cube-docker-restassured</artifactId>
+            <version>${arquillian-cube-docker-restassured.version}</version>
+            <type>pom</type>
             <scope>test</scope>
         </dependency>
 
