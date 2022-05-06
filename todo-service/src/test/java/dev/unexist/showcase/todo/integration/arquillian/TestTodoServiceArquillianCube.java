@@ -34,5 +34,7 @@ public class TestTodoServiceArquillianCube {
             .statusCode(200);
 
         assertThat(this.idServiceContainer).isNotNull();
+        assertThat(this.idServiceContainer.getDockerHost()).isNotBlank();
+        assertThat(this.idServiceContainer.getConnectionPort()).isNotNegative();
     }
 }
