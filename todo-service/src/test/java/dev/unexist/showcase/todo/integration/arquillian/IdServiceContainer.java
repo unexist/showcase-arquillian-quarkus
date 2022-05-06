@@ -53,7 +53,7 @@ public class IdServiceContainer {
     }
 
     public int getConnectionPort() {
-        return port;
+        return this.port;
     }
 
     public String getDockerHost() {
