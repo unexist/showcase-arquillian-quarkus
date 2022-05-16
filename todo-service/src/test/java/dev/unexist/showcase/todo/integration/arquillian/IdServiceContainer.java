@@ -30,7 +30,7 @@ public class IdServiceContainer {
     private static final String JAR_FILE = "id-service-0.1-runner.jar";
 
     @HostIp
-    String dockerHost;
+    private String dockerHost;
 
     @HostPort(8085)
     private int port;
