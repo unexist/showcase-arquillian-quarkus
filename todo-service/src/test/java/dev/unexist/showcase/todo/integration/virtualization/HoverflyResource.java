@@ -16,7 +16,7 @@ import io.specto.hoverfly.junit.core.Hoverfly;
 import io.specto.hoverfly.junit.core.HoverflyConfig;
 import io.specto.hoverfly.junit.core.HoverflyMode;
 
-import javax.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.MediaType;
 import java.util.Map;
 import java.util.UUID;
 
